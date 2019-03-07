@@ -53,9 +53,12 @@ public class USACO{
          row = Integer.parseInt(direction2[0]);
         int col= Integer.parseInt(direction2[1]);
         int stomp=Integer.parseInt(direction2[2]);
-        int lowest = 0;
-        int highestrow;
-        int highestcol;
+        int highest = 0;
+        int highestrow=0;
+        int highestcol=0;
+        boolean found=true;
+        while(found){
+          found=false;
         for (int inc=0;inc<=2;inc++){
         for (int i=0;i<=2;i++){
           if (row+inc<field.length && col+i<field[0].length){
@@ -63,10 +66,16 @@ public class USACO{
             field[row+inc][col+i]=highest;
             highestrow=row+inc;
             highestcol=col+i;
+            found=true;
         }}
       }}
-      field[highestrow][highestcol]-=stomp;
-    return 10;}
+      field[highestrow][highestcol]-=stomp;}
+        for (int a=0;a<field.length;a++){
+          System.out.println("\n");
+          for (int b=0;b<field[0].length;b++){
+            System.out.print(field[a][b]+" ");
+          }
+    return 10;}}
     catch (FileNotFoundException e){
       e.printStackTrace();
     }
