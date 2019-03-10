@@ -22,7 +22,7 @@ public class USACO{
     //System.out.println(firstline);
     String[] directionline = firstline.split(" ");
     int[][] field = new int[Integer.parseInt(directionline[0])][Integer.parseInt(directionline[1])];
-    printpuzzle(field);
+  //  printpuzzle(field);
     index=-1;
     int row=0;
      int newly =0;
@@ -38,16 +38,16 @@ public class USACO{
       }
     //  System.out.println(line);
       }
-      System.out.println(printpuzzle(field));
+      //System.out.println(printpuzzle(field));
 
       while(inf.hasNextLine()){
         String line=inf.nextLine();
-        System.out.println(line);
+      //  System.out.println(line);
         String[] direction2= line.split(" ");
          row = Integer.parseInt(direction2[0])-1;
         int col= Integer.parseInt(direction2[1])-1;
         int stomp=Integer.parseInt(direction2[2]);
-        System.out.println(""+row+" "+col+" "+stomp);
+      //  System.out.println(""+row+" "+col+" "+stomp);
         int highest = 0;
         int highestrow=0;
         int highestcol=0;
@@ -62,23 +62,23 @@ public class USACO{
         }
       }
     }
-      field[highestrow][highestcol]-=stomp;
+      field[highestrow][highestcol]-=stomp;//lowers the highest one
       for (int inc=0;inc<=2;inc++){
       for (int i=0;i<=2;i++){
         if (row+inc<field.length && col+i<field[0].length){
         if (field[row+inc][col+i]>field[highestrow][highestcol]){
-          field[row+inc][col+i]=field[highestrow][highestcol];}
+          field[row+inc][col+i]=field[highestrow][highestcol];}//sets other ones to same level
       }
     }
     }
-      System.out.println(printpuzzle(field));
+  //    System.out.println(printpuzzle(field));
     }//end of directions
-  int elevation = Integer.parseInt(directionline[2]);
+  int elevation = Integer.parseInt(directionline[2]);//given in directionline
   int depth=0;
   for (int a=0;a< field.length;a++){
     for (int b=0;b<field[0].length;b++){
       if (field[a][b]<elevation){
-        depth+=elevation-field[a][b];
+        depth+=elevation-field[a][b];//finds depth by comparing to elevation
       }
     }
   }
@@ -88,7 +88,7 @@ public class USACO{
     catch (FileNotFoundException e){
       e.printStackTrace();
     }
-    return 3;
+    return -1;//unacheivable
 }
 public static String printpuzzle(int[][] puzzle){
   String value="";
@@ -105,5 +105,9 @@ return 4;
   }
   public static void main(String[] args){
     bronze("Test1.txt");
+    bronze("Test2.txt");
+    bronze("Test3.txt");
+    bronze("Test4.txt");
+    bronze("Test5.txt");
   }
 }
