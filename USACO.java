@@ -33,14 +33,14 @@ public class USACO{
       String[] lines = line.split(" ");
       for (int i=0;i<field[0].length;i++){
       //  System.out.println(Integer.parseInt(lines[i]));
-        field[index][i]=Integer.parseInt(lines[i]);
+        field[index][i]=Integer.parseInt(lines[i]);//fills up grid
         //printpuzzle(field);
       }
     //  System.out.println(line);
       }
       //System.out.println(printpuzzle(field));
 
-      while(inf.hasNextLine()){
+      while(inf.hasNextLine()){//collects instruction data
         String line=inf.nextLine();
       //  System.out.println(line);
         String[] direction2= line.split(" ");
@@ -90,6 +90,7 @@ public class USACO{
     }
     return -1;//unacheivable
 }
+
 public static String printpuzzle(int[][] puzzle){
   String value="";
   for (int a=0;a< puzzle.length;a++){
@@ -100,14 +101,49 @@ public static String printpuzzle(int[][] puzzle){
   }
   return value;
 }
-  public static int silver(String filename) throws FileNotFoundException{
-return 4;
+
+public static int silver(String filename) {
+    try{
+//read in the file
+File text = new File(filename);
+Scanner inf = new Scanner(text);
+String firstline = inf.nextLine();
+String[] directions = firstline.split(" ");
+char[][] grass = new char[Integer.parseInt(directions[0])][Integer.parseInt(directions[1])];
+System.out.println(printpuzzle(grass));
+String line ="";
+for (int i=0;i<grass.length;i++){
+  line=inf.nextLine();
+  for (int j=0;j<grass[0].length;j++){
+    grass[i][j]=line.charAt(j);
   }
+}
+System.out.println(printpuzzle(grass));
+return 4;}
+catch (FileNotFoundException e){
+  e.printStackTrace();
+}
+return -1;
+  }
+
+  public static String printpuzzle(char[][] puzzle){
+    String value="";
+    for (int a=0;a< puzzle.length;a++){
+      for (int b=0;b<puzzle[0].length;b++){
+        value+=" "+puzzle[a][b];
+      }
+      value+="\n";
+    }
+    return value;
+  }
+
+
   public static void main(String[] args){
     bronze("Test1.txt");
     bronze("Test2.txt");
     bronze("Test3.txt");
     bronze("Test4.txt");
     bronze("Test5.txt");
+    silver("Testee1.txt");
   }
 }
