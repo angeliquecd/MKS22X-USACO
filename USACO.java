@@ -57,7 +57,7 @@ public class USACO{
           if (field[row+inc][col+i]>highest) {
             highest=field[row+inc][col+i];
             highestrow=row+inc;
-            highestcol=col+i;
+            highestcol=col+i;//identifies highest elevation thing
             }
         }
       }
@@ -83,7 +83,7 @@ public class USACO{
     }
   }
   System.out.println(depth*72*72);
-    return depth*72*72;
+    return depth*72*72;//what the website told us to multiply by
   }//end of try
     catch (FileNotFoundException e){
       e.printStackTrace();
@@ -101,7 +101,7 @@ public static String printpuzzle(int[][] puzzle){
   }
   return value;
 }
-//second question
+
 public static int silver(String filename) {
     try{
 //read in the file
@@ -136,41 +136,42 @@ moves[r1][c1]=1;
 //initializes board
 
 int[] go = {1,0,-1,0,0,1,0,-1};
-for (int t=0;t<time;t++){
-  moves= setup(moves,go,grass);
+for (int t=0;t<time;t++){//limits it to time alotted
+  moves= setup(moves,go,grass);//alters move every second to a new 'fresh' board
 }
 
-System.out.println(printpuzzle(moves));
-System.out.println(moves[r2][c2]);
-System.out.println(""+time+" "+r1+" "+c1+" "+r2+" "+c2);
+//System.out.println(printpuzzle(moves));
+//System.out.println(moves[r2][c2]);
+//System.out.println(""+time+" "+r1+" "+c1+" "+r2+" "+c2);
 return moves[r2][c2];}
 catch (FileNotFoundException e){
   e.printStackTrace();
 }
-return -1;
+return -1;//unreachable
   }
 
 public static int[][] setup(int[][] moves,int[] go,char[][] grass){
-  //2d array that stores the numbers of ways to get to a spot
-  int[][] fresh = new int[moves.length][moves[0].length];
+  int[][] fresh = new int[moves.length][moves[0].length];//makes a fresh array, which
+  //means that old moves disappear and it just goes off of the new spots you could have made it to
     for(int i = 0; i < moves.length; i++){
       for(int j = 0; j < moves[0].length; j++){
         if (moves[i][j]==-9) fresh[i][j]=-9;
-        if(moves[i][j]>0){
+        if(moves[i][j]>0){//looks for a place where a theoretical move could be
           for (int a=0;a<=6;a+=2){
-          moving(moves,fresh,i+go[a],j+go[a+1],moves[i][j]);
-          System.out.println(printpuzzle(fresh));}
+            ispossible(moves,fresh,i+go[a],j+go[a+1],moves[i][j]);}//searches for possible moves
+          //System.out.println(printpuzzle(fresh));}
         //fresh[i][j]=0;
       //moves[i][j]=0;
     }
       }
       }
-      System.out.println("new time");
+    //  System.out.println("new time");
       return fresh;
 }
-public static void moving(int[][] moves, int[][] fresh,int row, int col, int value){
+public static void ispossible(int[][] moves, int[][] fresh,int row, int col, int value){
   if(row >= 0 && row < fresh.length && col >= 0 && col < fresh[0].length && moves[row][col]>-1){
-  fresh[row][col] += value;
+  fresh[row][col] += value;//determines if it's a valid move and then transfers data from the
+  //last move to the new row, because the new second is just an extension of the old time
 }
 }
   public static String printpuzzle(char[][] puzzle){
@@ -192,5 +193,9 @@ public static void moving(int[][] moves, int[][] fresh,int row, int col, int val
     bronze("Test4.txt");
     bronze("Test5.txt");
     silver("Testee1.txt");
+    silver("Testee2.txt");
+    silver("Testee3.txt");
+    silver("Testee4.txt");
+    silver("Testee5.txt");
   }
 }
