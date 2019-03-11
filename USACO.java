@@ -1,4 +1,4 @@
-import java.util.*;
+ import java.util.*;
 import java.io.*;
 public class USACO{
   public static int bronze(String filename) {
@@ -110,7 +110,8 @@ Scanner inf = new Scanner(text);
 String firstline = inf.nextLine();
 String[] directions = firstline.split(" ");
 char[][] grass = new char[Integer.parseInt(directions[0])][Integer.parseInt(directions[1])];
-System.out.println(printpuzzle(grass));
+int time = Integer.parseInt(directions[2]);
+//System.out.println(printpuzzle(grass));
 String line ="";
 for (int i=0;i<grass.length;i++){
   line=inf.nextLine();
@@ -118,7 +119,27 @@ for (int i=0;i<grass.length;i++){
     grass[i][j]=line.charAt(j);
   }
 }
-System.out.println(printpuzzle(grass));
+//System.out.println(printpuzzle(grass));
+String[] spots = inf.nextLine().split(" ");
+int r1 = Integer.parseInt(spots[0]);
+int c1 = Integer.parseInt(spots[1]);
+int r2 = Integer.parseInt(spots[2]);
+int c2 = Integer.parseInt(spots[3]);
+int[][] moves = new int[grass.length][grass[0].length];
+moves[r1][c1]=0;
+int[] go = new int[8];
+go[0]=1; go[1]=0; go[2]=-1; go[3]=0; go[4]=0;
+go[5]=1; go[6]=0; go[7]=-1;
+if (time%2==0){
+  for (int h=0;r1+h<moves.length && c1+h<moves[0].length;h++){
+    if (r1+h<moves.length && c1+h<moves[0].length) moves[r1+h][c1+h]=0;
+    if (r1-h>=0 && c1-h>=0) moves[r1-h][c1-h]=0;
+}}
+for (int j=0;j<=6;j+=2){
+  moves[r1+go[j]][c1+go[j+1]]=1;
+}
+System.out.println(printpuzzle(moves));
+System.out.println(""+time+" "+r1+" "+c1+" "+r2+" "+c2);
 return 4;}
 catch (FileNotFoundException e){
   e.printStackTrace();
