@@ -150,24 +150,26 @@ catch (FileNotFoundException e){
 return -1;
   }
 
-public static int[][] setup(int[][] fresh, int[][] moves,int[] go,char[][] grass){
+public static int[][] setup(int[][] moves,int[] go,char[][] grass){
   //2d array that stores the numbers of ways to get to a spot
   int[][] fresh = new int[moves.length][moves[0].length];
     for(int i = 0; i < moves.length; i++){
-      for(int j = 0; j < moves.length; j++){
+      for(int j = 0; j < moves[0].length; j++){
+        if (moves[i][j]==-9) fresh[i][j]=-9;
         if(moves[i][j]>0){
-          for (int a=0;a<6;a+=2){
-          moving(moves,fresh,i+go[a],j+go[a+1],moves[i][j],grass);
+          for (int a=0;a<=6;a+=2){
+          moving(moves,fresh,i+go[a],j+go[a+1],moves[i][j]);
           System.out.println(printpuzzle(fresh));}
-        fresh[i][j]=0;
-      moves[i][j]=0;}
+        //fresh[i][j]=0;
+      //moves[i][j]=0;
+    }
       }
       }
       System.out.println("new time");
       return fresh;
 }
-public static void moving(int[][] moves, int[][] fresh,int row, int col, int value, char[][] grass){
-  if(row >= 0 && row < fresh.length && col >= 0 && col < fresh[0].length){
+public static void moving(int[][] moves, int[][] fresh,int row, int col, int value){
+  if(row >= 0 && row < fresh.length && col >= 0 && col < fresh[0].length && moves[row][col]>-1){
   fresh[row][col] += value;
 }
 }
