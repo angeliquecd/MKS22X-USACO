@@ -128,21 +128,33 @@ for (int[] a: moves){
     b=0;
   }
 }
-int[] go = new int[8];
-go[0]=1; go[1]=0; go[2]=-1; go[3]=0; go[4]=0;
-go[5]=1; go[6]=0; go[7]=-1;
-for (int t=0;t<time;t++){
+int[] go = {1,0,-1,0,0,1,0,-1};
+int[][] fresh = new int[moves.length][moves[0].length];
+int steps = 0;
+moves[r1][c1]=1;
+for (int t=0;t<=time;t++){
+  System.out.println("in it");
 for (int a=0;a<moves.length;a++){
   for (int b=0;b<moves[0].length;b++){
-    for (int c=0;c<6;c+=2){
-      if (a+go[c]>=0 && a+go[c]<moves.length && b+go[c+1]>=0 && b+go[c+1]<moves[0].length){
-        moves[a+go[c]][b+go[c+1]]+=1;//fills up grid with moves
-      }
-     }
-    if (grass[a][b]=='*') moves[a][b]=0;//accounts for trees
+    if (moves[a][b]>0){
+      if (a==r1&& b==c1 &&t>0) moves[a][b]=0;}
+    if (moves[a][b]>0|| fresh[a][b]>0){
+    for (int c=0;c<=6;c+=2){
+      if(a+go[c]>=0 && a+go[c]<moves.length &&
+      b+go[c+1]>=0 && b+go[c+1]<moves[0].length &&
+      grass[a+go[c]][b+go[c+1]]!='*'){
+        fresh[a+go[c]][b+go[c+1]] +=fresh[a][b]; }//fills up grid with moves
+      System.out.println(""+a+" "+ b);
+        System.out.println(""+(a+go[c])+" "+(b+go[c+1]));
+      System.out.println(printpuzzle(fresh));
+    }
+    System.out.println("done here");
+  }
+    if (grass[a][b]=='*') fresh[a][b]=-1;//accounts for trees
 }}
 }
 System.out.println(printpuzzle(moves));
+System.out.println(printpuzzle(fresh));
 System.out.println(moves[r2][c2]);
 System.out.println(""+time+" "+r1+" "+c1+" "+r2+" "+c2);
 return 4;}
