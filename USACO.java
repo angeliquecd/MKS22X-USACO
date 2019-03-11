@@ -116,29 +116,34 @@ String line ="";
 for (int i=0;i<grass.length;i++){
   line=inf.nextLine();
   for (int j=0;j<grass[0].length;j++){
-    grass[i][j]=line.charAt(j);
-  }
+    grass[i][j]=line.charAt(j);}
 }
 //System.out.println(printpuzzle(grass));
 String[] spots = inf.nextLine().split(" ");
-int r1 = Integer.parseInt(spots[0]);
-int c1 = Integer.parseInt(spots[1]);
-int r2 = Integer.parseInt(spots[2]);
-int c2 = Integer.parseInt(spots[3]);
+int r1 = Integer.parseInt(spots[0])-1; int c1 = Integer.parseInt(spots[1])-1;
+int r2 = Integer.parseInt(spots[2])-1; int c2 = Integer.parseInt(spots[3])-1;
 int[][] moves = new int[grass.length][grass[0].length];
-moves[r1][c1]=0;
+for (int[] a: moves){
+  for (int b: a){
+    b=0;
+  }
+}
 int[] go = new int[8];
 go[0]=1; go[1]=0; go[2]=-1; go[3]=0; go[4]=0;
 go[5]=1; go[6]=0; go[7]=-1;
-if (time%2==0){
-  for (int h=0;r1+h<moves.length && c1+h<moves[0].length;h++){
-    if (r1+h<moves.length && c1+h<moves[0].length) moves[r1+h][c1+h]=0;
-    if (r1-h>=0 && c1-h>=0) moves[r1-h][c1-h]=0;
+for (int t=0;t<time;t++){
+for (int a=0;a<moves.length;a++){
+  for (int b=0;b<moves[0].length;b++){
+    for (int c=0;c<6;c+=2){
+      if (a+go[c]>=0 && a+go[c]<moves.length && b+go[c+1]>=0 && b+go[c+1]<moves[0].length){
+        moves[a+go[c]][b+go[c+1]]+=1;//fills up grid with moves
+      }
+     }
+    if (grass[a][b]=='*') moves[a][b]=0;//accounts for trees
 }}
-for (int j=0;j<=6;j+=2){
-  moves[r1+go[j]][c1+go[j+1]]=1;
 }
 System.out.println(printpuzzle(moves));
+System.out.println(moves[r2][c2]);
 System.out.println(""+time+" "+r1+" "+c1+" "+r2+" "+c2);
 return 4;}
 catch (FileNotFoundException e){
