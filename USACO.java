@@ -101,7 +101,7 @@ public static String printpuzzle(int[][] puzzle){
   }
   return value;
 }
-
+//second question
 public static int silver(String filename) {
     try{
 //read in the file
@@ -123,19 +123,23 @@ String[] spots = inf.nextLine().split(" ");
 int r1 = Integer.parseInt(spots[0])-1; int c1 = Integer.parseInt(spots[1])-1;
 int r2 = Integer.parseInt(spots[2])-1; int c2 = Integer.parseInt(spots[3])-1;
 int[][] moves = new int[grass.length][grass[0].length];
+//int[][] fresh = new int[grass.length][grass[0].length];
+//done with setting up
+
 for (int a=0;a<moves.length;a++){
   for (int b=0;b<moves[0].length;b++){
-    if (grass[a][b]=='*')moves[a][b]=-1;
+    if (grass[a][b]=='*')moves[a][b]=-9;//random off limit number
     else moves[a][b]=0;
   }
 }
-int[] go = {1,0,-1,0,0,1,0,-1};
-//int[][] fresh = new int[moves.length][moves[0].length];
-int steps = 0;
 moves[r1][c1]=1;
+//initializes board
+
+int[] go = {1,0,-1,0,0,1,0,-1};
 for (int t=0;t<time;t++){
   moves= setup(moves,go,grass);
 }
+
 System.out.println(printpuzzle(moves));
 System.out.println(moves[r2][c2]);
 System.out.println(""+time+" "+r1+" "+c1+" "+r2+" "+c2);
@@ -146,20 +150,24 @@ catch (FileNotFoundException e){
 return -1;
   }
 
-public static int[][] setup(int[][] moves,int[] go,char[][] grass){
+public static int[][] setup(int[][] fresh, int[][] moves,int[] go,char[][] grass){
   //2d array that stores the numbers of ways to get to a spot
   int[][] fresh = new int[moves.length][moves[0].length];
     for(int i = 0; i < moves.length; i++){
       for(int j = 0; j < moves.length; j++){
-        if(moves[i][j] != 0 &&moves[i][j]!=-1){
-          for (int a=0;a<6;a+=2)
+        if(moves[i][j]>0){
+          for (int a=0;a<6;a+=2){
           moving(moves,fresh,i+go[a],j+go[a+1],moves[i][j],grass);
-        }}
+          System.out.println(printpuzzle(fresh));}
+        fresh[i][j]=0;
+      moves[i][j]=0;}
       }
+      }
+      System.out.println("new time");
       return fresh;
 }
 public static void moving(int[][] moves, int[][] fresh,int row, int col, int value, char[][] grass){
-  if(row >= 0 && row < fresh.length && col >= 0 && col < fresh[0].length && grass[row][col] != '*'){
+  if(row >= 0 && row < fresh.length && col >= 0 && col < fresh[0].length){
   fresh[row][col] += value;
 }
 }
